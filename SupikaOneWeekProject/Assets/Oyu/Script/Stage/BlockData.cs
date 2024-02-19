@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GoLeft : MonoBehaviour
+public class BlockData : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
@@ -13,7 +13,6 @@ public class GoLeft : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //‰E‚ÉˆÚ“®
-        transform.position += new Vector3(-0.001f, 0, 0);
+        
     }
 }
