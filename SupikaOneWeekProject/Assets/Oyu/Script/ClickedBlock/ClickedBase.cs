@@ -14,15 +14,34 @@ public class ClickedBase : MonoBehaviour
 
     }
 
-    protected virtual void OnDestroy()
+    protected virtual void GimmickClicked()
+    {
+        //継承先でクリックされた時の処理を書く
+    }
+
+    void OnDestroy()
     {
         //消される時の処理　ブロックによって違うのでオーバーライドして使う
-        Debug.Log("Invok()");
+        //Debug.Log("OnDestroy");
+    }
+
+    void OnDisable()
+    {
+        //マウスがオブジェクト上でクリックされたときの処理
+        //Debug.Log("OnDisable");
     }
 
     //マウスがオブジェクト上でクリックされたときの処理
     public void OnMouseDown()
     {
-        GameObject.Destroy(gameObject);
+        GimmickClicked();
+       
+        //見えないようにするためレンダラーを消す
+        gameObject.GetComponent<Renderer>().enabled = false;
+
+        //当たり判定を消す
+        gameObject.GetComponent<Collider2D>().enabled = false;
+
+     //   GameObject.Destroy(gameObject);
     }
 }
