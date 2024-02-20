@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class CheckGoal : MonoBehaviour
 {
+    [SerializeField] private RectTransform rectTransform = null;
 
     [SerializeField] private GameObject playerObject = null;
 
@@ -56,15 +57,14 @@ public class CheckGoal : MonoBehaviour
             return;
         }
 
-        //ブロックの幅を使う場合
-        GridLayoutGroup gridLayoutGroup = GetComponent<GridLayoutGroup>();
-        if (gridLayoutGroup == null)
+        //ステージの幅を使う場合
+        if (rectTransform == null)
         {
-            Debug.LogError("GridLayoutGroupがアタッチされていません");
+            Debug.LogError("rectTransform がアタッチされていません");
             return;
         }
 
-        goalX = GetComponent<RectTransform>().rect.width;
+        goalX = rectTransform.rect.width;
         goalX += endBlockSpace;
     }
 }

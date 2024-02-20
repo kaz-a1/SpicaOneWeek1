@@ -11,7 +11,7 @@ public class CreateGameOver : MonoBehaviour
 
         //(‰¼)ƒ^ƒCƒgƒ‹‚Ö–ß‚é
         ToNextScene toNextScene = gameObject.AddComponent<ToNextScene>();
-        toNextScene.SetNextSceneString("OyuTitleScene");
+        toNextScene.SetNextSceneString("TitleScene");
         toNextScene.LoadNextScene();
 
         Destroy(this);
