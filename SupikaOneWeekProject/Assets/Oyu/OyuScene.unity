@@ -4418,13 +4418,13 @@ RectTransform:
   - {fileID: 237252670}
   - {fileID: 1611293131}
   - {fileID: 979173722}
+  - {fileID: 949084093}
   - {fileID: 868732530}
   - {fileID: 530039363}
   - {fileID: 9546574}
   - {fileID: 1876822270}
   - {fileID: 1248171256}
   - {fileID: 32316592}
-  - {fileID: 949084093}
   - {fileID: 2100538173}
   - {fileID: 645952478}
   - {fileID: 1050590127}
@@ -5124,6 +5124,18 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: f0bacf3b648f9b24f8cb4af06a053248, type: 3}
+    - target: {fileID: 5269089865680611679, guid: f5739639cbd840349a1c886f94a30d65, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5269089865680611679, guid: f5739639cbd840349a1c886f94a30d65, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5269089865680611679, guid: f5739639cbd840349a1c886f94a30d65, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5671837066594181835, guid: f5739639cbd840349a1c886f94a30d65, type: 3}
       propertyPath: m_Name
       value: Player
