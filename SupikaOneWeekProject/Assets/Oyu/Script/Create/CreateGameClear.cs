@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CreateGameEnd : MonoBehaviour
+public class CreateGameClear : MonoBehaviour
 {
 
     public void Create()

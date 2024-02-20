@@ -7,8 +7,10 @@ public class ClickToGameOver : ClickedBase
 
     protected override void GimmickClicked()
     {
-        //継承先でクリックされた時の処理を書く
+        //ゲームオーバー
         Debug.Log("GameOver");
+
+        gameObject.AddComponent<CreateGameOver>().Create();
     }
 
 

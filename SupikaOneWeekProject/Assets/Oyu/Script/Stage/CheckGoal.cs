@@ -41,7 +41,7 @@ public class CheckGoal : MonoBehaviour
         {
             Debug.Log("ÉSÅ[Éã");
 
-            gameObject.AddComponent<CreateGameEnd>().Create();
+            gameObject.AddComponent<CreateGameClear>().Create();
         }
 
     }
