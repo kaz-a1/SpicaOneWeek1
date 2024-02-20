@@ -4417,7 +4417,6 @@ RectTransform:
   m_Children:
   - {fileID: 237252670}
   - {fileID: 1611293131}
-  - {fileID: 949084093}
   - {fileID: 979173722}
   - {fileID: 868732530}
   - {fileID: 530039363}
@@ -4425,6 +4424,7 @@ RectTransform:
   - {fileID: 1876822270}
   - {fileID: 1248171256}
   - {fileID: 32316592}
+  - {fileID: 949084093}
   - {fileID: 2100538173}
   - {fileID: 645952478}
   - {fileID: 1050590127}
