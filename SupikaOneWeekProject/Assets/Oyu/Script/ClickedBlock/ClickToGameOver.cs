@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class ClickToGameOver : ClickedBase
@@ -8,7 +7,17 @@ public class ClickToGameOver : ClickedBase
 
     private bool startEffect = false;
 
-    protected override void GimmickClicked()
+    public void Start()
+    {
+        //親オブジェクトに自分を追加
+        BlockData blockData = transform.parent.GetComponent<BlockData>();
+        if (blockData != null)
+        {
+            blockData.AddBlockInfo(gameObject, BlockData.BlockInfo.BlockType.Red);
+        }
+    }
+
+    public override void GimmickClicked()
     {
         //ゲームオーバー
         Debug.Log("GameOver");
@@ -25,6 +34,12 @@ public class ClickToGameOver : ClickedBase
         {
             breakSE.Play();
         }
+
+        //見えないようにするためレンダラーを消す
+        gameObject.GetComponent<Renderer>().enabled = false;
+
+        //当たり判定を消す
+        gameObject.GetComponent<Collider2D>().enabled = false;
     }
 
     void Update()

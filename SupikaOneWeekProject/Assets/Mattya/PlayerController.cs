@@ -84,7 +84,7 @@ public class PlayerController : MonoBehaviour
                     AddMoveSpeed /= Mathf.Sqrt(2);
                 }
             }
-            Debug.Log(AddMoveSpeed);
+            //Debug.Log(AddMoveSpeed);
 
             if (Input.GetKey(KeyCode.W))
             {

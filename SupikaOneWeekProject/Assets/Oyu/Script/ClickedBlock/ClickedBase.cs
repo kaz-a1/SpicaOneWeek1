@@ -8,17 +8,18 @@ public class ClickedBase : MonoBehaviour
     [SerializeField] protected ParticleSystem particleSystemComponent = null;
     [SerializeField] protected AudioSource breakSE = null;
 
-    void Awake()
-    {
-    }
-
     // Start is called before the first frame update
     void Start()
     {
-
+        //親オブジェクトに自分を追加
+        BlockData blockData = transform.parent.GetComponent<BlockData>();
+        if (blockData != null)
+        {
+            blockData.AddBlockInfo(gameObject,BlockData.BlockInfo.BlockType.Black);
+        }
     }
 
-    protected virtual void GimmickClicked()
+    public virtual void GimmickClicked()
     {
         //継承先でクリックされた時の処理を書く
         
@@ -34,6 +35,11 @@ public class ClickedBase : MonoBehaviour
             breakSE.Play();
         }
 
+        //見えないようにするためレンダラーを消す
+        gameObject.GetComponent<Renderer>().enabled = false;
+
+        //当たり判定を消す
+        gameObject.GetComponent<Collider2D>().enabled = false;
     }
 
     void OnDestroy()
@@ -52,11 +58,5 @@ public class ClickedBase : MonoBehaviour
     public void OnMouseDown()
     {
         GimmickClicked();
-       
-        //見えないようにするためレンダラーを消す
-        gameObject.GetComponent<Renderer>().enabled = false;
-
-        //当たり判定を消す
-        gameObject.GetComponent<Collider2D>().enabled = false;
     }
 }
