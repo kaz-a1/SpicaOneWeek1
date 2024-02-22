@@ -6,7 +6,7 @@ public class ClickedBase : MonoBehaviour
 {
 
     [SerializeField] protected ParticleSystem particleSystemComponent = null;
-    [SerializeField] protected AudioSource breakSE;
+    [SerializeField] protected AudioSource breakSE = null;
 
     void Awake()
     {
