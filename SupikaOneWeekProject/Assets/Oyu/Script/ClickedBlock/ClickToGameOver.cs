@@ -36,7 +36,8 @@ public class ClickToGameOver : ClickedBase
         {
             //ゲームオーバー処理
             Debug.Log("GameOver処理");
-            gameObject.AddComponent<CreateGameOver>().Create();
+            GameManager.Instance.ExplotionGameOver();
+
         }
 
 

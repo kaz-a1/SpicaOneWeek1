@@ -14,5 +14,6 @@ public class ToNextScene : MonoBehaviour
     public void LoadNextScene()
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene(nextSceneName);
+        SceneUpdateManager.Instance.StartUpdate();
     }
 }
