@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class ClickedBase : MonoBehaviour
 {
+
+    [SerializeField] protected ParticleSystem particleSystemComponent = null;
+    [SerializeField] protected AudioSource breakSE = null;
+
     void Awake()
     {
     }
@@ -17,6 +21,19 @@ public class ClickedBase : MonoBehaviour
     protected virtual void GimmickClicked()
     {
         //継承先でクリックされた時の処理を書く
+        
+        //パーティクル表示
+        if(particleSystemComponent != null)
+        {
+            particleSystemComponent.Play();
+        }
+
+        //SE再生
+        if(breakSE != null)
+        {
+            breakSE.Play();
+        }
+
     }
 
     void OnDestroy()
@@ -41,7 +58,5 @@ public class ClickedBase : MonoBehaviour
 
         //当たり判定を消す
         gameObject.GetComponent<Collider2D>().enabled = false;
-
-     //   GameObject.Destroy(gameObject);
     }
 }
