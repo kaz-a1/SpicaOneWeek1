@@ -5083,7 +5083,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridLayoutGroup: {fileID: 1347272900}
   blocksObj: {fileID: 1347272894}
-  speed: 1
+  speed: 1.5
   startInBlock: 1
 --- !u!224 &773372227 stripped
 RectTransform:
@@ -7812,12 +7812,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dab2d3a550556b44ba3a7cb93659ee7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 431516394}
+  player: {fileID: 431516396}
   pauseKey: 27
   pauseObject: {fileID: 367428112}
   expGameoverObject: {fileID: 354332485}
   dethGameoverObject: {fileID: 270021039}
-  state: 1
+  state: 0
 --- !u!114 &1324830922
 MonoBehaviour:
   m_ObjectHideFlags: 0

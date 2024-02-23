@@ -3,22 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : SingletonMonoBehaviour<GameManager>
+public class GameManager : MonoBehaviour
 {
 
-    [SerializeField] private GameObject player;
+    [SerializeField] private PlayerController player;
 
     [SerializeField] private KeyCode pauseKey = KeyCode.Escape;
     private bool isPauseMove = false;//ぱーずアニメーション中か
-    private GameObject pauseObject = null;
-    private GameObject expGameoverObject = null;
-    private GameObject dethGameoverObject = null;
+    [SerializeField] private GameObject pauseObject = null;
+    [SerializeField] private GameObject expGameoverObject = null;
+    [SerializeField] private GameObject dethGameoverObject = null;
 
     //ゲームの状態
     enum GameState
     {
-        OtherGameScene,//ゲームシーン以外
-
         Game,
 
         Pause,
@@ -35,19 +33,28 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
 
     public void Update()
     {
-        SettingObjects();
 
-        //
+        //一時停止インタラクト
         if (Input.GetKeyDown(pauseKey))
         {
             SwitchPause();
             isPauseMove = false;
         }
+
+        if (state != GameState.Game) return;
+
+        if (player != null)
+        {
+            if(player.Deth)
+            {
+                PlayerDethGameOver();
+            }
+        }
+
     }
 
     public void SwitchPause()
     {
-        if (!IsGame()) return;
         if (isPauseMove) return;
 
         if (pauseObject == null)
@@ -74,7 +81,6 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
 
     public void PlayerDethGameOver()
     {
-        if (!IsGame()) return;
         if (state == GameState.GameOver) return;
 
         if (dethGameoverObject == null)
@@ -90,7 +96,6 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
 
     public void ExplotionGameOver()
     {
-        if (!IsGame()) return;
         if (state == GameState.GameOver) return;
 
         if (expGameoverObject == null)
@@ -104,30 +109,11 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         state = GameState.GameOver;
     }
 
-    public void ChackNowScene()
-    {
-        if (SceneManager.GetActiveScene().name == "GameScene")
-        {
-            state = GameState.Game;
-        }
-        else
-        {
-            state = GameState.OtherGameScene;
-        }
-    }
-
-    public bool IsGame()
-    {
-        return SceneManager.GetActiveScene().name == "GameScene";
-    }
-
     private void SettingObjects()
     {
-        if (!IsGame()) return;
-
         if (player == null)
         {
-            player = GameObject.Find("Player");
+            GameObject.Find("Player").TryGetComponent<PlayerController>(out player);
         }
 
         if (pauseObject == null)

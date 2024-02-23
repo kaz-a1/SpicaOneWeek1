@@ -9,7 +9,7 @@ public class SceneUpdateManager : SingletonMonoBehaviour<SceneUpdateManager>
 {
 
     private bool isUpdate = true;
-    bool GetIsUpdate()
+    public bool GetIsUpdate()
     {
         return isUpdate;
     }

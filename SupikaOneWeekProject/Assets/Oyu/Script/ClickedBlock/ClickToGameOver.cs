@@ -7,6 +7,8 @@ public class ClickToGameOver : ClickedBase
 
     private bool startEffect = false;
 
+    private GameManager gameManager = null;
+
     public void Start()
     {
         //親オブジェクトに自分を追加
@@ -14,6 +16,11 @@ public class ClickToGameOver : ClickedBase
         if (blockData != null)
         {
             blockData.AddBlockInfo(gameObject, BlockData.BlockInfo.BlockType.Red);
+        }
+
+        if (!GameObject.Find("MetaObject").TryGetComponent(out gameManager))
+        {
+            Debug.LogError("GameManagerが見つかりませんでした");
         }
     }
 
@@ -44,17 +51,18 @@ public class ClickToGameOver : ClickedBase
 
     void Update()
     {
-
         if (!startEffect) return;
 
         if (!particleSystemComponent.isPlaying)
         {
             //ゲームオーバー処理
             Debug.Log("GameOver処理");
-            GameManager.Instance.ExplotionGameOver();
+
+            if(gameManager != null)
+            {
+                gameManager.ExplotionGameOver();
+            }
         }
-
-
     }
 
 
