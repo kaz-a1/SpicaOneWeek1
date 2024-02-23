@@ -52,7 +52,6 @@ public class ClickToGameOver : ClickedBase
             //ゲームオーバー処理
             Debug.Log("GameOver処理");
             GameManager.Instance.ExplotionGameOver();
-
         }
 
 

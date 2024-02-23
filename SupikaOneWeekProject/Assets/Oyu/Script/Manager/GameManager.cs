@@ -10,10 +10,9 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
 
     [SerializeField] private KeyCode pauseKey = KeyCode.Escape;
     private bool isPauseMove = false;//ぱーずアニメーション中か
-    [SerializeField] private GameObject pauseObject = null;
-
-    [SerializeField] private GameObject expGameoverObject = null;
-    [SerializeField] private GameObject dethGameoverObject = null;
+    private GameObject pauseObject = null;
+    private GameObject expGameoverObject = null;
+    private GameObject dethGameoverObject = null;
 
     //ゲームの状態
     enum GameState
@@ -31,32 +30,12 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
 
     public void Start()
     {
-        //それぞれのオブジェクトのアクティブ状態の初期化とtransformの初期化
-        if (pauseObject != null)
-        {
-            pauseObject.SetActive(false);
-            pauseObject.transform.position = new Vector3(0, 0, 0);
-        }
-        if (expGameoverObject != null)
-        {
-            expGameoverObject.SetActive(false);
-            expGameoverObject.transform.position = new Vector3(0, 0, 0);
-        }
-        if (dethGameoverObject != null)
-        {
-            dethGameoverObject.SetActive(false);
-            dethGameoverObject.transform.position = new Vector3(0, 0, 0);
-        }
+        SettingObjects();
     }
 
     public void Update()
     {
-        //プレイヤーが死んだ
-        if (player == null)
-        {
-            PlayerDethGameOver();
-            return;
-        }
+        SettingObjects();
 
         //
         if (Input.GetKeyDown(pauseKey))
@@ -139,7 +118,39 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
 
     public bool IsGame()
     {
-        return SceneManager.GetActiveScene().name == "OyuScene";
+        return SceneManager.GetActiveScene().name == "GameScene";
+    }
+
+    private void SettingObjects()
+    {
+        if (!IsGame()) return;
+
+        if (player == null)
+        {
+            player = GameObject.Find("Player");
+        }
+
+        if (pauseObject == null)
+        {
+            pauseObject = GameObject.Find("Pause");
+            pauseObject.SetActive(false);
+            pauseObject.transform.position = new Vector3(0, 0, 0);
+            SceneUpdateManager.Instance.StartUpdate();
+        }
+
+        if (expGameoverObject == null)
+        {
+            expGameoverObject = GameObject.Find("ExpGameOver");
+            expGameoverObject.SetActive(false);
+            expGameoverObject.transform.position = new Vector3(0, 0, 0);
+        }
+
+        if (dethGameoverObject == null)
+        {
+            dethGameoverObject = GameObject.Find("PlayerDethGameOver");
+            dethGameoverObject.SetActive(false);
+            dethGameoverObject.transform.position = new Vector3(0, 0, 0);
+        }
     }
 
 }

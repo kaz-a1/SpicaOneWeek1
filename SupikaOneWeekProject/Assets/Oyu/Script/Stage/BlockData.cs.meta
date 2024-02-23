@@ -3,7 +3,13 @@ guid: 2c374a98742e7a2458544b079e91ddcd
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - BlackBlockObj: {fileID: 5671837066594181835, guid: 48f7983023e54d04580152efba73a38b, type: 3}
+  - RedBlockObj: {fileID: 7556077370983006369, guid: 850f91afd3d87784fa5d2b888012a807, type: 3}
+  - BlueBlockObj: {fileID: 5671837066594181835, guid: e1600c680ad2afa4892e356dd11f0a9b, type: 3}
+  - EnptyBlockObj: {fileID: 5671837066594181835, guid: 565206013808cdb4e909096b25e5fa8e, type: 3}
+  - OutBlueBlockObject: {instanceID: 0}
+  - gridLayoutGroup: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

@@ -11,8 +11,7 @@ public class CreateGameClear : MonoBehaviour
 
         //(‰¼)ƒ^ƒCƒgƒ‹‚Ö–ß‚é
         ToNextScene toNextScene = gameObject.AddComponent<ToNextScene>();
-        toNextScene.SetNextSceneString("TitleScene");
-        toNextScene.LoadNextScene();
+        toNextScene.LoadNextScene(ToNextScene.SceneName.Title);
 
         Destroy(this);
     }

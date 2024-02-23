@@ -9,11 +9,6 @@ public class CreateGameOver : MonoBehaviour
     {
         //げーむオーバーの文字を出す
 
-        //(仮)タイトルへ戻る
-        ToNextScene toNextScene = gameObject.AddComponent<ToNextScene>();
-        toNextScene.SetNextSceneString("TitleScene");
-        toNextScene.LoadNextScene();
-
         Destroy(this);
     }
 

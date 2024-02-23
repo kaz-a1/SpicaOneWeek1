@@ -71,7 +71,6 @@ public class ClickDirctionBreak : ClickedBase
         if (moveDistance < 0)
         {
             transform.position = targetPos;
-            Debug.Log($"transform.position:{transform.position}");
             isMove = false;
             once = true;
         }
@@ -101,8 +100,6 @@ public class ClickDirctionBreak : ClickedBase
 
         //pivotのずれを考慮
         targetPos = new Vector3(transform.position.x - moveDistance, transform.position.y, 0);
-
-        Debug.Log($"targetPos:{targetPos}");
 
     }
 
