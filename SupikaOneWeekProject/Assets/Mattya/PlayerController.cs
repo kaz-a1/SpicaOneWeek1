@@ -66,7 +66,7 @@ public class PlayerController : MonoBehaviour
             //ゲームオーバー
             Debug.Log("GameOver");
 
-            gameObject.AddComponent<CreateGameOver>().Create();
+            GameManager.Instance.PlayerDethGameOver();
         }
         else
         {
@@ -84,7 +84,7 @@ public class PlayerController : MonoBehaviour
                     AddMoveSpeed /= Mathf.Sqrt(2);
                 }
             }
-            Debug.Log(AddMoveSpeed);
+            //Debug.Log(AddMoveSpeed);
 
             if (Input.GetKey(KeyCode.W))
             {
