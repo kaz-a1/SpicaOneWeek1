@@ -8,12 +8,12 @@ public class CheckGoal : MonoBehaviour
 {
     [SerializeField] private RectTransform rectTransform = null;
 
-    [SerializeField] private GameObject playerObject = null;
-
     [SerializeField] private bool objectPos = false;
 
     [SerializeField] private float endBlockSpace = 0.0f;
 
+    private GameObject playerObject = null;
+    private GameManager gameManager = null;
     private float goalX = 0.0f;
 
 
@@ -28,12 +28,26 @@ public class CheckGoal : MonoBehaviour
     {
         if (playerObject == null)
         {
-            Debug.LogError("プレイヤーオブジェクトがアタッチされていません");
-            return;
+            playerObject = GameObject.Find("Player");
+            if (playerObject == null)
+            {
+                Debug.LogError("プレイヤーオブジェクトがアタッチされていません");
+                return;
+            }
+        }
+
+        if (gameManager == null)
+        {
+            gameManager = GameObject.Find("MetaObject").GetComponent<GameManager>();
+            if (gameManager == null)
+            {
+                Debug.LogError("GameManager がアタッチされていません");
+                return;
+            }
         }
 
         //ゴール地点が計算されていない場合(スタートだと上手く動かない)
-        if(goalX == 0.0f)
+        if (goalX == 0.0f)
         {
             CalcGoalX();
         }
@@ -42,9 +56,8 @@ public class CheckGoal : MonoBehaviour
         {
             Debug.Log("ゴール");
 
-            gameObject.AddComponent<CreateGameClear>().Create();
+            gameManager.StageClear();
         }
-
     }
 
     //ゴール地点を計算
@@ -61,6 +74,12 @@ public class CheckGoal : MonoBehaviour
         if (rectTransform == null)
         {
             Debug.LogError("rectTransform がアタッチされていません");
+            return;
+        }
+
+        if(rectTransform.rect.width == 0.0f)
+        {
+            Debug.Log("rectTransform の初期化まだです");
             return;
         }
 

@@ -11,8 +11,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private KeyCode pauseKey = KeyCode.Escape;
     private bool isPauseMove = false;//ぱーずアニメーション中か
     [SerializeField] private GameObject pauseObject = null;
+    [SerializeField] private GameObject stageClearObject = null;
     [SerializeField] private GameObject expGameoverObject = null;
     [SerializeField] private GameObject dethGameoverObject = null;
+    [SerializeField] private GameObject gameClearObject = null;
 
     //ゲームの状態
     enum GameState
@@ -21,10 +23,16 @@ public class GameManager : MonoBehaviour
 
         Pause,
         PauseMove,
+        StageClear,
         GameOver,
         GameClear,
     }
     [SerializeField] private GameState state = GameState.Game;
+
+    [SerializeField] private List<GameObject> stagePrehub = new List<GameObject>();
+    int nowStage = 0;
+
+    public PlayerController GetPlayerController() { return player; }
 
     public void Start()
     {
@@ -45,12 +53,33 @@ public class GameManager : MonoBehaviour
 
         if (player != null)
         {
-            if(player.Deth)
+            if (player.Deth)
             {
                 PlayerDethGameOver();
             }
         }
 
+    }
+
+    public void ChangeStage(int stageNum)
+    {
+        if (stageNum < 0 || stageNum >= stagePrehub.Count)
+        {
+            Debug.LogError("stageNumが範囲外です");
+            return;
+        }
+
+        for (int i = 0; i < stagePrehub.Count; i++)
+        {
+            if (i == stageNum)
+            {
+                stagePrehub[i].SetActive(true);
+            }
+            else
+            {
+                stagePrehub[i].SetActive(false);
+            }
+        }
     }
 
     public void SwitchPause()
@@ -109,6 +138,21 @@ public class GameManager : MonoBehaviour
         state = GameState.GameOver;
     }
 
+    public void StageClear()
+    {
+        if (state == GameState.StageClear) return;
+
+        if (stageClearObject == null)
+        {
+            Debug.LogError("stageClearObjectがnullです");
+            return;
+        }
+
+        stageClearObject.SetActive(true);
+        SceneUpdateManager.Instance.StopUpdate();
+        state = GameState.StageClear;
+    }
+
     private void SettingObjects()
     {
         if (player == null)
@@ -124,6 +168,13 @@ public class GameManager : MonoBehaviour
             SceneUpdateManager.Instance.StartUpdate();
         }
 
+        if (stageClearObject == null)
+        {
+            stageClearObject = GameObject.Find("StageClear");
+            stageClearObject.SetActive(false);
+            stageClearObject.transform.position = new Vector3(0, 0, 0);
+        }
+
         if (expGameoverObject == null)
         {
             expGameoverObject = GameObject.Find("ExpGameOver");
@@ -136,6 +187,13 @@ public class GameManager : MonoBehaviour
             dethGameoverObject = GameObject.Find("PlayerDethGameOver");
             dethGameoverObject.SetActive(false);
             dethGameoverObject.transform.position = new Vector3(0, 0, 0);
+        }
+
+        if (gameClearObject == null)
+        {
+            gameClearObject = GameObject.Find("GameClear");
+            gameClearObject.SetActive(false);
+            gameClearObject.transform.position = new Vector3(0, 0, 0);
         }
     }
 
