@@ -30,13 +30,15 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameState state = GameState.Game;
 
     [SerializeField] private List<GameObject> stagePrehub = new List<GameObject>();
-    int nowStage = 0;
+    [SerializeField] private int nowStage = 0;
 
     public PlayerController GetPlayerController() { return player; }
 
     public void Start()
     {
+        ChangeStage(nowStage);
         SettingObjects();
+        StageStart();
     }
 
     public void Update()
@@ -61,6 +63,13 @@ public class GameManager : MonoBehaviour
 
     }
 
+    public void NextStage()
+    {
+        nowStage++;
+        ChangeStage(nowStage);
+        StageStart();
+    }
+
     public void ChangeStage(int stageNum)
     {
         if (stageNum < 0 || stageNum >= stagePrehub.Count)
@@ -73,6 +82,8 @@ public class GameManager : MonoBehaviour
         {
             if (i == stageNum)
             {
+                //ê∂ê¨
+                Instantiate(stagePrehub[i]);
                 stagePrehub[i].SetActive(true);
             }
             else
@@ -194,6 +205,37 @@ public class GameManager : MonoBehaviour
             gameClearObject = GameObject.Find("GameClear");
             gameClearObject.SetActive(false);
             gameClearObject.transform.position = new Vector3(0, 0, 0);
+        }
+    }
+
+    private void StageStart()
+    {
+        state = GameState.Game;
+        SceneUpdateManager.Instance.StopUpdate();
+
+        if (pauseObject != null)
+        {
+            pauseObject.SetActive(false);
+        }
+
+        if (stageClearObject != null)
+        {
+            stageClearObject.SetActive(false);
+        }
+
+        if (expGameoverObject != null)
+        {
+            expGameoverObject.SetActive(false);
+        }
+
+        if (dethGameoverObject != null)
+        {
+            dethGameoverObject.SetActive(false);
+        }
+
+        if(gameClearObject != null)
+        {
+            gameClearObject.SetActive(false);
         }
     }
 
