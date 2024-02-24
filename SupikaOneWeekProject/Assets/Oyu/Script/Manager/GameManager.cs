@@ -83,7 +83,6 @@ public class GameManager : MonoBehaviour
             if (i == stageNum)
             {
                 //ê∂ê¨
-                Instantiate(stagePrehub[i]);
                 stagePrehub[i].SetActive(true);
             }
             else
@@ -211,7 +210,7 @@ public class GameManager : MonoBehaviour
     private void StageStart()
     {
         state = GameState.Game;
-        SceneUpdateManager.Instance.StopUpdate();
+        SceneUpdateManager.Instance.StartUpdate();
 
         if (pauseObject != null)
         {
