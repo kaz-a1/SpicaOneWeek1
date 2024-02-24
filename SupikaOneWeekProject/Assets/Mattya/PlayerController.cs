@@ -5,7 +5,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     public float moveSpeed = 0.1f;
     public bool LeftAndRightMove = false;
-    private BoxCollider2D boxCollider;
+    private CapsuleCollider2D capsuleCollider2D;
 
     public bool Deth = false;
     private Vector3 initPos = new Vector3(0, 0, 0);
@@ -24,10 +24,10 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         // BoxCollider2D コンポーネントを取得
-        boxCollider = GetComponent<BoxCollider2D>();
+        capsuleCollider2D = GetComponent<CapsuleCollider2D>();
 
         // もしくは、BoxCollider2D コンポーネントがアタッチされていない場合は、null を返す
-        if (boxCollider == null)
+        if (capsuleCollider2D == null)
         {
             Debug.LogWarning("BoxCollider2D コンポーネントがアタッチされていません。");
         }
@@ -36,7 +36,7 @@ public class PlayerController : MonoBehaviour
         GameObject otherObject = GameObject.Find("Square");
         if (otherObject != null)
         {
-            BoxCollider2D otherCollider = otherObject.GetComponent<BoxCollider2D>();
+            CapsuleCollider2D otherCollider = otherObject.GetComponent<CapsuleCollider2D>();
             if (otherCollider == null)
             {
                 Debug.LogWarning("OtherObject に BoxCollider2D コンポーネントがアタッチされていません。");
@@ -117,10 +117,10 @@ public class PlayerController : MonoBehaviour
 
             transform.position = newPosition; // 新しい位置を設定
 
-            if (boxCollider != null)
+            if (capsuleCollider2D != null)
             {
                 // 他のオブジェクトとの当たり判定を検出
-                Collider2D[] colliders = Physics2D.OverlapBoxAll(transform.position, boxCollider.size, 0f);
+                Collider2D[] colliders = Physics2D.OverlapBoxAll(transform.position, capsuleCollider2D.size, 0f);
                 foreach (Collider2D collider in colliders)
                 {
                     // 自身以外のオブジェクトとの当たり判定を検出
