@@ -8,6 +8,13 @@ public class PlayerController : MonoBehaviour
     private BoxCollider2D boxCollider;
 
     public bool Deth = false;
+    private Vector3 initPos = new Vector3(0, 0, 0);
+
+    public void ResetPlayer()
+    {
+        transform.position = initPos;
+        Deth = false;
+    }
 
     void Awake()
     {
@@ -44,6 +51,8 @@ public class PlayerController : MonoBehaviour
         {
             Debug.LogWarning("OtherObject ‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ‚Å‚µ‚½B");
         }
+
+        initPos = transform.position;
     }
 
     void Update()
@@ -71,12 +80,12 @@ public class PlayerController : MonoBehaviour
         {
             Vector3 newPosition = transform.position; // Œ»İ‚ÌˆÊ’u‚ğæ“¾
 
-            
+
             float AddMoveSpeed = moveSpeed;
             if (LeftAndRightMove)
             {
                 //‚à‚µÎ‚ßˆÚ“®“ü—Í‚ğ‚µ‚Ä‚¢‚é‚È‚ç
-                if ((Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A)) 
+                if ((Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A))
                     && (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.W)))
                 {
                     //ˆÚ“®—Ê‚ğã2‚É‚·‚é
@@ -124,4 +133,4 @@ public class PlayerController : MonoBehaviour
 
         }
     }
-    }
+}

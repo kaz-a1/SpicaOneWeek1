@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -29,14 +30,20 @@ public class GameManager : MonoBehaviour
     }
     [SerializeField] private GameState state = GameState.Game;
 
-    [SerializeField] private List<GameObject> stagePrehub = new List<GameObject>();
+    [SerializeField] private List<GameObject> stageObjects = new List<GameObject>();
+    private GameObject nowStageObject = null;
     [SerializeField] private int nowStage = 0;
 
     public PlayerController GetPlayerController() { return player; }
 
     public void Start()
     {
-        ChangeStage(nowStage);
+        for (int i = 0; i < stageObjects.Count; i++)
+        {
+            stageObjects[i].SetActive(false);
+        }
+
+        CreateStage(nowStage);
         SettingObjects();
         StageStart();
     }
@@ -65,29 +72,38 @@ public class GameManager : MonoBehaviour
 
     public void NextStage()
     {
+        nowStageObject.SetActive(false);
         nowStage++;
-        ChangeStage(nowStage);
+        CreateStage(nowStage);
         StageStart();
     }
 
-    public void ChangeStage(int stageNum)
+    public void RetryStage()
     {
-        if (stageNum < 0 || stageNum >= stagePrehub.Count)
+        nowStageObject.SetActive(false);
+        CreateStage(nowStage);
+        StageStart();
+    }
+
+    public void CreateStage(int stageNum)
+    {
+        if (stageNum < 0 || stageNum >= stageObjects.Count)
         {
             Debug.LogError("stageNum‚ª”ÍˆÍŠO‚Å‚·");
             return;
         }
 
-        for (int i = 0; i < stagePrehub.Count; i++)
+        Destroy(nowStageObject);
+        nowStageObject = null;
+
+        for (int i = 0; i < stageObjects.Count; i++)
         {
             if (i == stageNum)
             {
                 //¶¬
-                stagePrehub[i].SetActive(true);
-            }
-            else
-            {
-                stagePrehub[i].SetActive(false);
+                nowStageObject = Instantiate(stageObjects[i]);
+                nowStageObject.SetActive(true);
+                break;
             }
         }
     }
@@ -207,7 +223,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void StageStart()
+    public void StageStart()
     {
         state = GameState.Game;
         SceneUpdateManager.Instance.StartUpdate();
@@ -230,12 +246,19 @@ public class GameManager : MonoBehaviour
         if (dethGameoverObject != null)
         {
             dethGameoverObject.SetActive(false);
+            Debug.LogWarning("dethGameoverObject‚ð”ñ•\Ž¦");
         }
 
-        if(gameClearObject != null)
+        if (gameClearObject != null)
         {
             gameClearObject.SetActive(false);
         }
+
+        if (player != null)
+        {
+            player.ResetPlayer();
+        }
+
     }
 
 }
