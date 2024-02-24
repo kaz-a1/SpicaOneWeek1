@@ -34934,7 +34934,7 @@ MonoBehaviour:
   - {fileID: 22208807}
   - {fileID: 1141823864}
   - {fileID: 441252687}
-  nowStage: 4
+  nowStage: 0
 --- !u!4 &1394504331
 Transform:
   m_ObjectHideFlags: 0
