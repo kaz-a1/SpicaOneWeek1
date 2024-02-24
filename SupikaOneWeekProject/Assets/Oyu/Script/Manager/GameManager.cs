@@ -3,51 +3,97 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : SingletonMonoBehaviour<GameManager>
+public class GameManager : MonoBehaviour
 {
 
-    [SerializeField] private GameObject player;
+    [SerializeField] private PlayerController player;
 
     [SerializeField] private KeyCode pauseKey = KeyCode.Escape;
     private bool isPauseMove = false;//ぱーずアニメーション中か
-    private GameObject pauseObject = null;
-    private GameObject expGameoverObject = null;
-    private GameObject dethGameoverObject = null;
+    [SerializeField] private GameObject pauseObject = null;
+    [SerializeField] private GameObject stageClearObject = null;
+    [SerializeField] private GameObject expGameoverObject = null;
+    [SerializeField] private GameObject dethGameoverObject = null;
+    [SerializeField] private GameObject gameClearObject = null;
 
     //ゲームの状態
     enum GameState
     {
-        OtherGameScene,//ゲームシーン以外
-
         Game,
 
         Pause,
         PauseMove,
+        StageClear,
         GameOver,
         GameClear,
     }
     [SerializeField] private GameState state = GameState.Game;
 
+    [SerializeField] private List<GameObject> stagePrehub = new List<GameObject>();
+    [SerializeField] private int nowStage = 0;
+
+    public PlayerController GetPlayerController() { return player; }
+
     public void Start()
     {
+        ChangeStage(nowStage);
         SettingObjects();
+        StageStart();
     }
 
     public void Update()
     {
-        SettingObjects();
 
-        //
+        //一時停止インタラクト
         if (Input.GetKeyDown(pauseKey))
         {
             SwitchPause();
             isPauseMove = false;
         }
+
+        if (state != GameState.Game) return;
+
+        if (player != null)
+        {
+            if (player.Deth)
+            {
+                PlayerDethGameOver();
+            }
+        }
+
+    }
+
+    public void NextStage()
+    {
+        nowStage++;
+        ChangeStage(nowStage);
+        StageStart();
+    }
+
+    public void ChangeStage(int stageNum)
+    {
+        if (stageNum < 0 || stageNum >= stagePrehub.Count)
+        {
+            Debug.LogError("stageNumが範囲外です");
+            return;
+        }
+
+        for (int i = 0; i < stagePrehub.Count; i++)
+        {
+            if (i == stageNum)
+            {
+                //生成
+                stagePrehub[i].SetActive(true);
+            }
+            else
+            {
+                stagePrehub[i].SetActive(false);
+            }
+        }
     }
 
     public void SwitchPause()
     {
-        if (!IsGame()) return;
         if (isPauseMove) return;
 
         if (pauseObject == null)
@@ -74,7 +120,6 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
 
     public void PlayerDethGameOver()
     {
-        if (!IsGame()) return;
         if (state == GameState.GameOver) return;
 
         if (dethGameoverObject == null)
@@ -90,7 +135,6 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
 
     public void ExplotionGameOver()
     {
-        if (!IsGame()) return;
         if (state == GameState.GameOver) return;
 
         if (expGameoverObject == null)
@@ -104,30 +148,26 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         state = GameState.GameOver;
     }
 
-    public void ChackNowScene()
+    public void StageClear()
     {
-        if (SceneManager.GetActiveScene().name == "GameScene")
-        {
-            state = GameState.Game;
-        }
-        else
-        {
-            state = GameState.OtherGameScene;
-        }
-    }
+        if (state == GameState.StageClear) return;
 
-    public bool IsGame()
-    {
-        return SceneManager.GetActiveScene().name == "GameScene";
+        if (stageClearObject == null)
+        {
+            Debug.LogError("stageClearObjectがnullです");
+            return;
+        }
+
+        stageClearObject.SetActive(true);
+        SceneUpdateManager.Instance.StopUpdate();
+        state = GameState.StageClear;
     }
 
     private void SettingObjects()
     {
-        if (!IsGame()) return;
-
         if (player == null)
         {
-            player = GameObject.Find("Player");
+            GameObject.Find("Player").TryGetComponent<PlayerController>(out player);
         }
 
         if (pauseObject == null)
@@ -136,6 +176,13 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
             pauseObject.SetActive(false);
             pauseObject.transform.position = new Vector3(0, 0, 0);
             SceneUpdateManager.Instance.StartUpdate();
+        }
+
+        if (stageClearObject == null)
+        {
+            stageClearObject = GameObject.Find("StageClear");
+            stageClearObject.SetActive(false);
+            stageClearObject.transform.position = new Vector3(0, 0, 0);
         }
 
         if (expGameoverObject == null)
@@ -150,6 +197,44 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
             dethGameoverObject = GameObject.Find("PlayerDethGameOver");
             dethGameoverObject.SetActive(false);
             dethGameoverObject.transform.position = new Vector3(0, 0, 0);
+        }
+
+        if (gameClearObject == null)
+        {
+            gameClearObject = GameObject.Find("GameClear");
+            gameClearObject.SetActive(false);
+            gameClearObject.transform.position = new Vector3(0, 0, 0);
+        }
+    }
+
+    private void StageStart()
+    {
+        state = GameState.Game;
+        SceneUpdateManager.Instance.StartUpdate();
+
+        if (pauseObject != null)
+        {
+            pauseObject.SetActive(false);
+        }
+
+        if (stageClearObject != null)
+        {
+            stageClearObject.SetActive(false);
+        }
+
+        if (expGameoverObject != null)
+        {
+            expGameoverObject.SetActive(false);
+        }
+
+        if (dethGameoverObject != null)
+        {
+            dethGameoverObject.SetActive(false);
+        }
+
+        if(gameClearObject != null)
+        {
+            gameClearObject.SetActive(false);
         }
     }
 

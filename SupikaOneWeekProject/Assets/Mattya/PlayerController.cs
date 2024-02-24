@@ -66,7 +66,6 @@ public class PlayerController : MonoBehaviour
             //ゲームオーバー
             Debug.Log("GameOver");
 
-            GameManager.Instance.PlayerDethGameOver();
         }
         else
         {

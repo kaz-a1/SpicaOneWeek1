@@ -57,6 +57,9 @@ public class ClickedBase : MonoBehaviour
     //マウスがオブジェクト上でクリックされたときの処理
     public void OnMouseDown()
     {
+        //Updateが止まっているときは処理しない
+        if (!SceneUpdateManager.Instance.GetIsUpdate()) return;
+
         GimmickClicked();
     }
 }
