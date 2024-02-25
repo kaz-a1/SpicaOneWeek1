@@ -47,7 +47,7 @@ public class CheckGoal : MonoBehaviour
         }
 
         //ゴール地点が計算されていない場合(スタートだと上手く動かない)
-        if (goalX == 0.0f)
+        if (goalX <= endBlockSpace)
         {
             CalcGoalX();
         }
@@ -84,7 +84,9 @@ public class CheckGoal : MonoBehaviour
             return;
         }
 
-        goalX = rectTransform.rect.width;
+        goalX = rectTransform.rect.width * rectTransform.localScale.x;
         goalX += endBlockSpace;
+
+        Debug.Log("goalX : " + goalX);
     }
 }
