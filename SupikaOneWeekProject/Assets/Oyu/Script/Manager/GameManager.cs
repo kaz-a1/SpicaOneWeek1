@@ -34,6 +34,8 @@ public class GameManager : MonoBehaviour
 
     public PlayerController GetPlayerController() { return player; }
 
+    public bool LastStage() { return (nowStage == stagePrehub.Count - 1); }
+
     public void Start()
     {
         ChangeStage(nowStage);
@@ -163,6 +165,21 @@ public class GameManager : MonoBehaviour
         state = GameState.StageClear;
     }
 
+    public void GameClear()
+    {
+        if (state == GameState.GameClear) return;
+
+        if (gameClearObject == null)
+        {
+            Debug.LogError("gameClearObject‚ªnull‚Å‚·");
+            return;
+        }
+
+        gameClearObject.SetActive(true);
+        SceneUpdateManager.Instance.StopUpdate();
+        state = GameState.GameClear;
+    }
+
     private void SettingObjects()
     {
         if (player == null)
@@ -232,7 +249,7 @@ public class GameManager : MonoBehaviour
             dethGameoverObject.SetActive(false);
         }
 
-        if(gameClearObject != null)
+        if (gameClearObject != null)
         {
             gameClearObject.SetActive(false);
         }

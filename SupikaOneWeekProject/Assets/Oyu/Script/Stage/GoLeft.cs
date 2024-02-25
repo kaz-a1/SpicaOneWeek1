@@ -11,7 +11,7 @@ public class GoLeft : MonoBehaviour
     [SerializeField] private GameObject blocksObj = null;
 
     [SerializeField] private float speed = 0.1f;
-    public float GetSpeed() { return speed; } 
+    public float GetSpeed() { return speed; }
 
     //初めに画面内に入っているブロック数
     [SerializeField] private float startInBlock = 0;
@@ -19,15 +19,18 @@ public class GoLeft : MonoBehaviour
     //スタートからの時間(秒)
     [NonSerialized] private float startToTime = 0.0f;
 
-    private bool clacStartPos = false;
+    [SerializeField] bool clacStartPos = false;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        //スタート時間が0の時の座標を計算
-        float width = Camera.main.orthographicSize * 2 * 1920 / 1080;
-        blocksObj.transform.position = new Vector3(width / 2.0f, 0, 0);
+        if (!clacStartPos)
+        {
+            //スタート時間が0の時の座標を計算
+            float width = Camera.main.orthographicSize * 2 * 1920 / 1080;
+            blocksObj.transform.position = new Vector3(width / 2.0f, 0, 0);
+        }
     }
 
     // Update is called once per frame
