@@ -4,6 +4,8 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField]
     public float moveSpeed = 0.1f;
+    public float xLimit = 4.4f;
+    public float yLimit = 4.4f;
     public bool LeftAndRightMove = false;
     private CapsuleCollider2D capsuleCollider2D;
 
@@ -117,7 +119,11 @@ public class PlayerController : MonoBehaviour
                 }
             }
 
+<<<<<<< Updated upstream
             //‰æ–Ê“à§Œä
+=======
+            // ‰æ–Ê“àˆÚ“®§Œä
+>>>>>>> Stashed changes
             newPosition.x = Mathf.Clamp(newPosition.x, -xLimit, xLimit);
             newPosition.y = Mathf.Clamp(newPosition.y, -yLimit, yLimit);
 
