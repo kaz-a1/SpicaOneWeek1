@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BackGroundMover : MonoBehaviour
+public class BackSlide : MonoBehaviour
 {
     private const float k_maxLength = 1f;
     private const string k_propName = "_MainTex";
