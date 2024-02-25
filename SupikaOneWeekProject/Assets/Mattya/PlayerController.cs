@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour
     public bool Deth = false;
     private Vector3 initPos = new Vector3(0, 0, 0);
 
+    public float xLimit = 4.4f;
+    public float yLimit = 4.4f;
     public void ResetPlayer()
     {
         transform.position = initPos;
@@ -114,6 +116,10 @@ public class PlayerController : MonoBehaviour
                     newPosition.x -= AddMoveSpeed;
                 }
             }
+
+            //âÊñ ì‡êßå‰
+            newPosition.x = Mathf.Clamp(newPosition.x, -xLimit, xLimit);
+            newPosition.y = Mathf.Clamp(newPosition.y, -yLimit, yLimit);
 
             transform.position = newPosition; // êVÇµÇ¢à íuÇê›íË
 
