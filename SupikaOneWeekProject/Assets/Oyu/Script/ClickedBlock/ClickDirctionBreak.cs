@@ -44,7 +44,7 @@ public class ClickDirctionBreak : ClickedBase
     {
         if (blockData == null)
         {
-            blockData = GameObject.Find("Blocks").GetComponent<BlockData>();
+            blockData = transform.parent.GetComponent<BlockData>();
         }
         else
         {

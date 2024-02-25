@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
 
     public PlayerController GetPlayerController() { return player; }
 
-    public bool LastStage() { return (nowStage == stagePrehub.Count - 1); }
+    public bool LastStage() { return (nowStage == stageObjects.Count - 1); }
 
     public void Start()
     {
