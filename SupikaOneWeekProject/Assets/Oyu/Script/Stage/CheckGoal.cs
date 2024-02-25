@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditorInternal.VersionControl.ListControl;
 
 public class CheckGoal : MonoBehaviour
 {
@@ -56,7 +57,8 @@ public class CheckGoal : MonoBehaviour
         {
             Debug.Log("ÉSÅ[Éã");
 
-            gameManager.StageClear();
+            if (gameManager.LastStage()) gameManager.GameClear();
+            else gameManager.StageClear();
         }
     }
 
